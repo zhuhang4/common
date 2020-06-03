@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style>
+        html,
+        body {
+            /*-ms-touch-action: none;*/
+            background: #000000;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="./static/common.css">
+</head>
+
+<body>
+    <script src='//res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+    <!-- <script src="lib/vconsole.min.js"></script> -->
+    <script>
+        // new VConsole();
+
+        window.baseurl = window.location.protocol + '//' + window.location.hostname;
+        document.title = '看，你的宠物开直播了！';
+
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/jquery-3.3.1.min.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/pixi.min.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/dragonBones.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/pixi-particles.min.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/greensock/TweenMax.js'><\/script>");
+
+        // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/img-compressor.min.js'><\/script>");
+        // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/exif.js'><\/script>");
+
+        //--------------------------------------------照片--------------------------------------------
+        // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/html2canvas.js'><\/script>");
+        // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/exif.js'><\/script>");
+        //--------------------------------------------三维--------------------------------------------
+        // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/dat.gui.min.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/three.min.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/OrbitControls.js'><\/script>");
+        document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/GLTFLoader.js'><\/script>");
+    </script>
+
+    
+    <!-- <%= htmlWebpackPlugin.tags.bodyTags %>> -->
+    <!-- <script src='lib/TTT.js'></script> -->
+</body>
+
+</html>

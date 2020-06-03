@@ -1,0 +1,51 @@
+.myinput {
+    border-style: none none none none;
+    text-align: center;
+    background-color: transparent;
+    font-size: 18px;
+    height: 30px;
+    color: #ffffff;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: -1;
+    text-align: center;
+    font-weight: bold;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: white;
+    font-weight: bold;
+    /* font-size: 16px; */
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+    font-weight: bold;
+    /* font-size: 16px; */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: white;
+    font-weight: bold;
+    /* font-size: 16px; */
+}
+
+textarea:focus {
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    outline: none;
+}
+
+@font-face {
+    font-family: 'mFont';
+    src: url('static/fonts/sx.ttf');
+}
