@@ -1,5 +1,4 @@
 import ThreePreload from "./ThreePreload";
-import MyProton from "./MyProton";
 import ThreeShader from "./ThreeShader.js";
 import { Monitor } from "./lib/GLPerf.js"
 // import * as THREE from './lib/three.min.js'

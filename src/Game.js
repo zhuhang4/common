@@ -26,7 +26,7 @@ export default class Game extends PIXI.Container {
     // console.log(this.p1);
     // for(let i in window.resource)
     // {
-    //   console.log('./'+i+'.js')
+    //   console.log('./'+i+'.js') 
     // }
   }
   async pageInit()
