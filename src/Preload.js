@@ -74,9 +74,9 @@ export default class Preload extends PIXI.Container {
                 this.loader_all.add(this.arr_assets[i], this.imgModules[this.arr_assets[i]]);
             }
         }
-        this.loader_all.add('json_ske0', 'static/db/db0_ske.json?v=' + MyData.version);
-        this.loader_all.add('json_tex0', 'static/db/db0_tex.json?v=' + MyData.version);
-        this.loader_all.add('png_tex0', 'static/db/db0_tex.png?v=' + MyData.version);
+        // this.loader_all.add('json_ske0', 'static/db/db0_ske.json?v=' + MyData.version);
+        // this.loader_all.add('json_tex0', 'static/db/db0_tex.json?v=' + MyData.version);
+        // this.loader_all.add('png_tex0', 'static/db/db0_tex.png?v=' + MyData.version);
         // this.loader_all.add('bg','static/medias/bg.mp3');
         this.loader_all.on("progress", this.loadProgressHandler.bind(this))
             .load(this.completeHandler.bind(this));
