@@ -13,7 +13,7 @@ export default class PageShader extends PIXI.Container {
 
         this.rect = YR.Easy.CreateRect(0, 0, MyData.stageW, MyData.stageH, 0x0, 'left');
         this.addChild(this.rect);
-        this.sp = YR.Easy.CreateSprite('p0_bg.jpg', MyData.stageW / 2, MyData.stageH / 2, 0.5, 0.5, 1);
+        this.sp = YR.Easy.CreateSprite('p0_a0.png', MyData.stageW / 2, MyData.stageH / 2, 0.5, 0.5, 1);
         this.addChild(this.sp);
 
 
@@ -25,9 +25,9 @@ export default class PageShader extends PIXI.Container {
         // gui.addColor(filter_cloud.uniforms,'u_color')
 
 
-        // this.shaderApply(this.rect,YRShader.NoiseCloud);
+        this.shaderApply(this.rect,YRShader.NoiseCloud);
         // this.shaderApply(this.sp, YRShader.Dissolve);
-        this.shaderApply(this.rect, YRShader.LightLineShader);
+        // this.shaderApply(this.rect, YRShader.LightLineShader);
 
     }
     shaderApply(target, Shader) {

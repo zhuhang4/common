@@ -1,5 +1,5 @@
 import MyData from './MyData';
-
+import * as THREE from './lib/three.min.js';
 export default class YRShader {
 	constructor() {
 		console.log('YRShader初始化完毕')

@@ -26,6 +26,7 @@ export default class MyData {
         MyData.version = __webpack_hash__;
 
         // MyData.factory = dragonBones.PixiFactory.factory;
+        window.mydata=MyData;
     }
 }
 

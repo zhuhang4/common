@@ -471,28 +471,25 @@ export class ScrollLoopH {
 export class Easy {
     static CreateJSONGroup(_group, _parent) {
         var ob = {};
-        let arr=[];
+        let arr = [];
         for (let name in _group) {
             let sp = Easy.CreateJSONSprite(_group, name, 1);
             ob[name] = sp;
-            sp.idx=_group[name].childIndex;
+            sp.idx = _group[name].childIndex;
             if (_parent) {
                 _parent.addChild(sp);
             }
             arr.push(sp);
         }
-        arr.sort((a,b)=>
-        {
-            if(a.idx>b.idx)
-            {
+        arr.sort((a, b) => {
+            if (a.idx > b.idx) {
                 return 1;
             }
-            else
-            {
+            else {
                 return -1;
             }
         })
-        for(let i in arr) {
+        for (let i in arr) {
             _parent.addChild(arr[i]);
         }
         return ob;
@@ -503,6 +500,8 @@ export class Easy {
         var _x = jsonGroup[name].x;
         var _y = jsonGroup[name].y;
         var sp = new PIXI.Sprite(MyData.resource[url].texture);
+        sp.name = name;
+        sp.statist = sp.statist;
         sp.orginX = sp.x = _x;
         sp.orginY = sp.y = _y;
         sp.anchor.set(0.5, 0.5);
@@ -635,7 +634,6 @@ export class Easy {
     }
     //注意字体只有在addChild到舞台后，才会加载
     static CreateText(text, _x, _y, fontSize = 25, color = 0xff0000, _dropShadow = false, _align = 'center', _fontFamily = '') {
-        console.log(_fontFamily);
         var style = {
             fontFamily: _fontFamily,
             fontSize: fontSize,
@@ -657,9 +655,13 @@ export class Easy {
         }
         // this.text.style.leading = 10;
         // this.text.style.breakWords = true;
-        // this.text.style.wordWrap = true;
-        // this.text.style.wordWrapWidth = 590;
-        // this.text.style.whiteSpace = "pre";
+        myText.setWrap = function (width) {
+            this.style.breakWords = true;
+            this.style.wordWrap = true;
+            this.style.wordWrapWidth = width;
+            this.style.whiteSpace = "pre";
+        };
+
         return myText;
     }
     static CreateTargetRoundMask(target, round = 5, masked = true) {
@@ -732,16 +734,28 @@ export class Easy {
         target.mask = _mask;
         return _mask;
     }
-    static BType(target, handler) {
+    static BType(target, handler, id) {
         target.interactive = true;
+        target.editype = 'bt';
+        if (id) {
+            target.editid = id;
+        }
+        else {
+            target.editid = target.name;
+        }
+
         target.on('pointerdown', (e) => {
             let _s = target.scale.x;
             target.scale.set(_s * 0.9);
             setTimeout(() => {
                 handler(e);
                 target.scale.set(_s);
+                if (_hmt && target.statist && target.statist != '') {
+                    _hmt.push(['_trackEvent', 'click', target.statist]);
+                }
             }, 100);
         });
+
     }
     static TMove(target, dir = 'left', _delay = 0, time = 0.7, _alpha = 0, _ease = Cubic.easeInOut) {
 
@@ -875,9 +889,8 @@ export class Easy {
         if (style.height) {
             style.height = MyData.scale * style.height + 'px';
         }
-        for(let i in style)
-        {
-            t.style[i]=style[i];
+        for (let i in style) {
+            t.style[i] = style[i];
         }
         // t.style=Object.assign(t.style,style);
 
@@ -892,9 +905,8 @@ export class Easy {
             t.style.display = 'none';
             t.style.zIndex = 0;
         }
-        myinput.domElement.addEventListener('blur',()=>
-        {
-            window.scrollTo(0,0);
+        myinput.domElement.addEventListener('blur', () => {
+            window.scrollTo(0, 0);
         });
 
         return myinput;
@@ -1139,15 +1151,13 @@ export class PPP {
     }
 }
 
-export class MyDB{
-    static initFactroy(json_ske,json_tex,png_tex,resource=MyData.resource)
-    {
-        MyData.factory=dragonBones.PixiFactory.factory;
+export class MyDB {
+    static initFactroy(json_ske, json_tex, png_tex, resource = MyData.resource) {
+        MyData.factory = dragonBones.PixiFactory.factory;
         MyData.factory.parseDragonBonesData(resource[json_ske].data);
         MyData.factory.parseTextureAtlasData(resource[json_tex].data, resource[png_tex].texture);
     }
-    static createDisplay(armatureName,json_ske,animateName,speed=1,resource=MyData.resource)
-    {
+    static createDisplay(armatureName, json_ske, animateName, speed = 1, resource = MyData.resource) {
         // this.armatureDisplay = MyData.factory.buildArmatureDisplay("Armature", resource['db' + aid.toString() + "_ske.json"].d ata.name);
         let armatureDisplay;
         armatureDisplay = MyData.factory.buildArmatureDisplay(armatureName, resource[json_ske].data.name);
@@ -1156,5 +1166,5 @@ export class MyDB{
 
         return armatureDisplay;
     }
-   
+
 }

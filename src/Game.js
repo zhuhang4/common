@@ -3,54 +3,63 @@ import * as YR from './YR';
 import MyData from './MyData';
 import MyVideo from './MyVideo.js';
 import PageShader from './PageShader.js';
+import { Tool, EasyMath } from './YRUtils';
+import PageEdit from './PageEdit.js';
 export default class Game extends PIXI.Container {
   constructor() {
     super();
 
-    this.pageInit();    
-    // this.init();
-    // YR.Easy.CreateJSONGroup(json_group0, this);
-
-    // this.bt = YR.Easy.CreateSprite('p0_bg.jpg', 0, 0, 0.0, 0.0, 1);
-    // this.addChild(this.bt);
-
+    if (document.title == 'edit') {
+      this.editInit();
+    }
+    else {
+      this.pageInit();
+    }
     // this.input=YR.Easy.CreateInput('请输入...',10,{left:150,top:50,width:300,height:50,color:"#fff"});
     // this.input.show();
     // this.addShader();
-
-    // this.nnn='Page0';
-    // this.p0=new this.nnn();
-    // this.addChild(this.p0);
-    // this.p1=await import('./Page1.js');
-   
-    // console.log(this.p1);
-    // for(let i in window.resource)
-    // {
-    //   console.log('./'+i+'.js') 
-    // }
   }
-  async pageInit()
-  {
-    for(let i in window.resource)
-    {
-      let path='./pages/'+i+'.js';
+  async pageInit() {
+    for (let i in window.resource) {
       //import如果传入得是变量，则会在编译时遍历该文件所在路径的全部文件（所以建立pages文件夹单独存放Page）
-      let key="p"+i.replace(/^Page/g,'');
-      let module=await import(`./pages/${i}.js`);
-      let _class=module.default.prototype.constructor;
-      this[key]=new _class();
-      // console.log('初始化成功:',key,this[key]);
+      let key = "p" + i.replace(/^Page/g, '');
+      let module = await import(`./pages/${i}.js`);
+      let _class = module.default.prototype.constructor;
+      this[key] = new _class();
     }
 
-    if(this.p0)
-    {
+    if (this.p0) {
       this.addChild(this.p0);
       this.p0.In();
     }
+    // console.log(EasyMath.range(300, [100, 600], [0, 200]));
   }
-  addShader()
-  {
-    this.pshader=new PageShader();
+
+  async editInit() {
+    let arr=[];
+    for (let i in window.resource) {
+      //import如果传入得是变量，则会在编译时遍历该文件所在路径的全部文件（所以建立pages文件夹单独存放Page）
+      let key = "p" + i.replace(/^Page/g, '');
+      let module = await import(`./pages/${i}.js`);
+      let _class = module.default.prototype.constructor;
+      this[key] = new _class();
+      let titleName=i;
+      //text:resource.json的key，target->构建的页面，resourceJson->resource.json的值
+      arr.push({resourceJsonKey:titleName,resourceJsonValue:window.resource[i],targetName:key,target:this[key]})
+    }
+    arr.sort((a,b)=>
+    {
+      return a.resourceJsonKey.localeCompare(b.resourceJsonKey)
+    })
+    this.ep=new PageEdit();
+    this.ep.init(arr)
+    this.addChild(this.ep);
+    YR.Mediator.getInstance().fire('Vue_EditUpdate',{data:arr})
+
+  }
+
+  addShader() {
+    this.pshader = new PageShader();
     this.addChild(this.pshader);
 
   }

@@ -45,13 +45,20 @@ export default class PixiMain extends PIXI.Container {
     };
 
     _resize() {
-        this.pixi_renderer.resize(window.innerWidth, window.innerHeight);
-        this.pixi_renderer.view.style.height = window.innerHeight + 'px';
-        this.pixi_renderer.view.style.width = window.innerWidth + 'px';
+
+        this.parentW = this.pixi_renderer.view.parentNode.offsetWidth;
+        this.parentH = this.pixi_renderer.view.parentNode.offsetHeight;
+
+        this.pixi_renderer.resize(this.parentW, this.parentH);
+        this.pixi_renderer.view.style.height = this.parentH + 'px';
+        this.pixi_renderer.view.style.width = this.parentW + 'px';
+
+        // this.pixi_renderer.resize(window.innerWidth, window.innerHeight);
+        // this.pixi_renderer.view.style.height = window.innerHeight + 'px';
+        // this.pixi_renderer.view.style.width = window.innerWidth + 'px';
         let mode = 'noBorder';
-        if(window.innerWidth > window.innerHeight)
-        {
-            mode='showAll';
+        if (this.parentW > this.parentH || document.title == 'edit') {
+            mode = 'showAll';
         }
         switch (mode) {
             case 'exactFit':
@@ -71,8 +78,8 @@ export default class PixiMain extends PIXI.Container {
                 this.pixiStage.scale.y = this.pixiStage.scale.x;
                 break;
         }
-        this.pixiStage.x = (window.innerWidth - MyData.stageW * this.pixiStage.scale.x) * .5;
-        this.pixiStage.y = (window.innerHeight - MyData.stageH * this.pixiStage.scale.y) * .5;
+        this.pixiStage.x = (this.parentW - MyData.stageW * this.pixiStage.scale.x) * .5;
+        this.pixiStage.y = (this.parentH - MyData.stageH * this.pixiStage.scale.y) * .5;
         MyData.offsetX = this.pixiStage.x / this.pixiStage.scale.x;
         MyData.offsetY = this.pixiStage.y / this.pixiStage.scale.x;
         MyData.scale = this.pixiStage.scale.x;
@@ -97,10 +104,10 @@ export default class PixiMain extends PIXI.Container {
         else {
             //假横屏
             if (window.innerWidth > window.innerHeight) {
-               
+
             }
             else {
-            
+
             }
             if (this.loadComplete && !this.game) {
                 this.game = new Game();

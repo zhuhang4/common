@@ -11,11 +11,13 @@ export default class Preload extends PIXI.Container {
             this.imgModules[key.replace(/(\.\/)/g, '')] = this.files(key);
         });
 
-        console.log(this.imgModules);
         this.loader_all = new PIXI.Loader();
         this.loader_pre = new PIXI.Loader();
         this.arr_assetsPre = [];
-        this.arr_assets = Object.keys(this.imgModules).concat();
+        this.arr_assets = Object.keys(this.imgModules).filter(e => {
+            return e.substr(0, 8) != 'dynamic/'
+        }).concat();
+
 
 
         this.graphic_bg = null;
@@ -107,6 +109,7 @@ export default class Preload extends PIXI.Container {
         TweenMax.to(this.graphic_loading, 1, { alpha: 0 });
         TweenMax.to(this.text_progress, 1, { alpha: 0 });
         setTimeout(() => {
+            console.log('xxxxxxxxxxxxx')
             this.parent.removeChild(this);
         }, 1000);
     }

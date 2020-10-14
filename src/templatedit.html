@@ -29,10 +29,9 @@
     <!-- <script src="lib/vconsole.min.js"></script> -->
     <script>
         // new VConsole();
+        document.title='edit';
 
         window.baseurl = window.location.protocol + '//' + window.location.hostname;
-        document.title = '看，你的宠物开直播了！';
-
         document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/jquery-3.3.1.min.js'><\/script>");
         document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/pixi.min.js'><\/script>");
         document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/dragonBones.js'><\/script>");
@@ -51,7 +50,9 @@
         // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/OrbitControls.js'><\/script>");
         // document.write("<script type='text/javascript' src='" + "" + "<%= htmlWebpackPlugin.options.cdn %>lib/GLTFLoader.js'><\/script>");
     </script>
-
+    <div id='app'>
+            
+    </div>
     
     <!-- <%= htmlWebpackPlugin.tags.bodyTags %>> -->
     <!-- <script src='lib/TTT.js'></script> -->
