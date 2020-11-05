@@ -5,6 +5,7 @@ export default class MyData {
     constructor() {
         axios.defaults.baseURL = window.baseurl;
         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        axios.defaults.withCredentials = true
         MyData.axios = axios;
         MyData.resource = null;
         MyData.stageW = 750;

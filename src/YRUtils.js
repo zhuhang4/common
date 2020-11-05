@@ -99,31 +99,76 @@ export class Tool {
         return targetObj;
     }
 
-    static loopObject(target,key){
-        if(target instanceof Object)
-        {
-            for(let i in target)
-            {
-                if(i==key)
-                {
+    static loopObject(target, key) {
+        if (target instanceof Object) {
+            for (let i in target) {
+                if (i == key) {
                     return target[i];
                 }
-                else
-                {
-                    let val=Tool.loopObject(target[i],key);
-                    if(val)
-                    {
+                else {
+                    let val = Tool.loopObject(target[i], key);
+                    if (val) {
                         return val;
                     }
                 }
             }
         }
-        else
-        {
+        else {
             return null;
         }
     }
 
+    static ArrayFlat(target) {
+
+        return target.reduce((pre, cur) => {
+            if (Array.isArray(cur)) {
+                return pre.concat(Tool.ArrayFlat(cur));
+            }
+            else {
+                return pre.concat(cur);
+            }
+        }, []);
+    }
+
+    static throllte(handler, delay) {
+
+        let pre = new Date().getTime();
+        return function () {
+            let t = new Date().getTime();
+            if (t - pre > delay) {
+                pre = t;
+                handler.apply(this, arguments)
+            }
+        }
+    }
+    static debounce(handler, delay, immediate = true) {
+        // let pre=new Date().getTime();
+        let t = 0;
+        return function () {
+            clearTimeout(t);
+            if (immediate) {
+                if (t == 0) {
+                    handler();
+                }
+
+                t = setTimeout(() => {
+                    if (t - pre > delay) {
+                        pre = t;
+                        handler.apply(this, arguments)
+                    }
+                }, delay);
+
+            }
+            else {
+                t = setTimeout(() => {
+                    if (t - pre > delay) {
+                        pre = t;
+                        handler.apply(this, arguments)
+                    }
+                }, delay);
+            }
+        }
+    }
     // MyData.axios({
     //     method: "post",
     //     url: "/api/v1/useractivate",

@@ -1010,6 +1010,7 @@ export class Mediator {
         this.fire(type, func) ? this.remove(type, func) : null;
     }
 }
+
 export class MyParticle {
     constructor(json, texture, amount, scale = 0.4) {
         let page = {};

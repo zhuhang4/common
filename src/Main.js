@@ -8,6 +8,7 @@ import PixiMain from './PixiMain.js'
 import MyData from './MyData.js'
 import * as YR from './YR'
 import ThreeMain from './ThreeMain.js';
+import { Tool } from "./YRUtils.js";
 
 
 export default class Main {
@@ -71,6 +72,9 @@ export default class Main {
 
 if (document.title != 'edit') {
     new MyData();
+
+    console.log('f:',Tool.ArrayFlat([123,[1,[2,3,123]],23]));
+    // Tool.ArrayFlat([1,2,3,4,5,6])
     //如果没有提供微信jssdk逻辑，就用这个
     // new WeChat();
     let cvs_2d = document.createElement('canvas');
