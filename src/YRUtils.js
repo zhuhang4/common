@@ -70,7 +70,7 @@ export class Tool {
     //   console.log('执行一些事情')
     // }, ob);
     static async TimeChain(delay, handler, ob) {
-        let p = function () {
+        let p = () => {
             return new Promise((s, f) => {
                 handler();
                 setTimeout(() => {
@@ -198,4 +198,213 @@ export class EasyMath {
         let cal = arr_r[0] + percent * (arr_r[1] - arr_r[0]);
         return cal;
     }
+}
+export class SAT {
+    collidesWith(shape0, shape1) {
+        let arr_projectaxes = this.getAxes(shape0).concat(this.getAxes(shape1));
+        for (let i = 0; i < arr_projectaxes.length; i++) {
+            let axes = arr_projectaxes[i];
+            let projection0 = this.getProject(shape0, axes);
+            let projection1 = this.getProject(shape1, axes);
+            console.log('p:', projection0, projection1)
+            if (!projection0.overlaps(projection1)) {
+                console.log('false')
+                return false;
+            }
+        }
+        console.log('true')
+
+
+    }
+    getAxes(shape) {
+        //返回vector2数组
+        let arr = shape.points;
+        console.log(arr)
+        let arr_bian = [];
+        for (let i = 0; i < arr.length; i++) {
+            let axes;
+            if (i != arr.length - 1) {
+                axes = arr[i + 1].sub(arr[i]).normalize();
+            }
+            else {
+                axes = arr[i].sub(arr[0]).normalize();
+            }
+            arr_bian.push(axes);
+        }
+
+        let arr_axes = [];
+        for (let i = 0; i < arr_bian.length; i++) {
+            let v = arr_bian[i].perpendicular();
+            arr_axes.push(v);
+        }
+
+        // let arr_minproject = [];
+        // for (let i = 0; i < arr_axes.length; i++) {
+        //     let arr_project = [];
+        //     for (let j = 0; j < arr_bian.length; j++) {
+        //         arr_project.push(arr_bian[j].dot(arr_axes[i]));
+        //     }
+        //     arr_minproject.push(new Projection(Math.min(...arr_project),Math.max(...arr_project)))
+        // }
+
+        return arr_axes;
+    }
+    // getProjectAxes(shape) {
+    //     let arr = SAT.prototype.getAxes(shape);
+    //     let arr_project = [];
+    //     for (let i = 0; i < arr.length; i++) {
+    //         let v = arr[i].perpendicular();
+    //         arr_project.push(v);
+    //     }
+    //     return arr_project;
+    // }
+
+    getProject(shape, axes) {
+        let points = shape.points;
+        console.log(points);
+        let arr = points.map(e => {
+            // console.log("points:",e)
+            return e.dot(axes);
+        })
+        return new Projection(Math.min(...arr), Math.max(...arr));
+    }
+
+}
+export class Projection {
+    constructor(min, max) {
+        this.min = min;
+        this.max = max;
+    }
+    overlaps(project) {
+        console.log(this.max, project.min, this.min, project.max)
+        if (this.max > project.min && this.min < project.max) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+}
+export class Vector2D {
+    constructor(x, y) {
+        this.x = x || 0;
+        this.y = y || 0;
+    }
+    clone() {
+        return new PIXI.Vector(this.x, this.y);
+    }
+    perpendicular() {
+        var v = new Vector2D();
+        let _x = this.x;
+        v.x = this.y;
+        v.y = _x * -1;
+        return v.normalize();
+    }
+    add(v) {
+        this.x += v.x;
+        this.y += v.y;
+        return this;
+    }
+    sub(v) {
+        let vec = new Vector2D();
+        vec.x = this.x - v.x;
+        vec.y = this.y - v.y;
+        return vec;
+    }
+    invert(v) {
+        this.x *= -1;
+        this.y *= -1;
+        return this;
+    }
+    multiplyScalar(s) {
+        this.x *= s;
+        this.y *= s;
+        return this;
+    };
+    divideScalar(s) {
+        if (s === 0) {
+            this.x = 0;
+            this.y = 0;
+        } else {
+            var invScalar = 1 / s;
+            this.x *= invScalar;
+            this.y *= invScalar;
+        }
+        return this;
+    };
+    dot(v) {
+        return this.x * v.x + this.y * v.y;
+    };
+    length(v) {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    };
+    lengthSq() {
+        return this.x * this.x + this.y * this.y;
+    };
+    normalize() {
+        return this.divideScalar(this.length());
+    };
+    distanceTo(v) {
+        return Math.sqrt(this.distanceToSq(v));
+    };
+    distanceToSq(v) {
+        var dx = this.x - v.x, dy = this.y - v.y;
+        return dx * dx + dy * dy;
+    };
+
+    set(x, y) {
+        this.x = x;
+        this.y = y;
+        return this;
+    };
+
+    setX(x) {
+        this.x = x;
+        return this;
+    };
+
+    setY(y) {
+        this.y = y;
+        return this;
+    };
+
+    setLength(l) {
+        var oldLength = this.length();
+        if (oldLength !== 0 && l !== oldLength) {
+            this.multiplyScalar(l / oldLength);
+        }
+        return this;
+    };
+
+    invert(v) {
+        this.x *= -1;
+        this.y *= -1;
+        return this;
+    };
+
+    lerp(v, alpha) {
+        this.x += (v.x - this.x) * alpha;
+        this.y += (v.y - this.y) * alpha;
+        return this;
+    };
+
+    rad() {
+        return Math.atan2(this.x, this.y);
+    };
+
+    deg() {
+        return this.rad() * 180 / Math.PI;
+    };
+
+    equals(v) {
+        return this.x === v.x && this.y === v.y;
+    };
+
+    rotate(theta) {
+        var xtemp = this.x;
+        this.x = this.x * Math.cos(theta) - this.y * Math.sin(theta);
+        this.y = xtemp * Math.sin(theta) + this.y * Math.cos(theta);
+        return this;
+    };
 }

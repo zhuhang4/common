@@ -5,10 +5,10 @@ import MyVideo from './MyVideo.js';
 import PageShader from './PageShader.js';
 import { Tool, EasyMath } from './YRUtils';
 import PageEdit from './PageEdit.js';
+
 export default class Game extends PIXI.Container {
   constructor() {
     super();
-
     if (document.title == 'edit') {
       this.editInit();
     }

@@ -10,7 +10,7 @@ export default class Preload extends PIXI.Container {
         this.files.keys().forEach(key => {
             this.imgModules[key.replace(/(\.\/)/g, '')] = this.files(key);
         });
-
+        MyData.imgModules=this.imgModules;
         this.loader_all = new PIXI.Loader();
         this.loader_pre = new PIXI.Loader();
         this.arr_assetsPre = [];

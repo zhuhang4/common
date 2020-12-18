@@ -510,12 +510,18 @@ export class Easy {
     }
     static CreateSprite(url, _x, _y, ax, ay, _alpha, _resource = MyData.resource) {
         let sp;
-        if (url == '') {
-            sp = new PIXI.Sprite();
+        if (!_resource) {
+            console.log('url:',url)
+            sp = PIXI.Sprite.from(url,{crossOrigin: 'anonymous'});
+            // img.crossOrigin = 'abc';
         }
         else {
-            sp = new PIXI.Sprite(_resource[url].texture);
-
+            if (url == '') {
+                sp = new PIXI.Sprite();
+            }
+            else {
+                sp = new PIXI.Sprite(_resource[url].texture);
+            }
         }
         sp.x = _x;
         sp.y = _y;
